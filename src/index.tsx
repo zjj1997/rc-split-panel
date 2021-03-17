@@ -78,7 +78,7 @@ const Container = styled.div<{ dragging: boolean; isHorizontal: boolean }>`
 interface DividerGrapleProps {
   isHorizontal: boolean;
   position: Position;
-  constrainedSize: number;
+  panelSize: number;
   visible: boolean;
 }
 
@@ -106,7 +106,7 @@ const DividerGraple = styled.div<DividerGrapleProps>`
       cursor: row-resize;
     }
   `}
-  ${props => `${props.position}: ${props.constrainedSize}px;`}
+  ${props => `${props.position}: ${props.panelSize}px;`}
   ${props => (props.visible ? '' : 'display: none;')}
 `;
 
@@ -157,10 +157,10 @@ const Pane = styled.div<DividerGrapleProps & { panel: boolean }>`
   ${props =>
     props.panel
       ? `${props.isHorizontal ? 'width' : 'height'}: ${
-          props.visible ? props.constrainedSize : 0
+          props.visible ? props.panelSize : 0
         }px;`
       : `${props.position}: ${
-          props.visible ? props.constrainedSize + 1 : 0
+          props.visible ? props.panelSize + 1 : 0
         }px;`}
 `;
 
@@ -177,11 +177,11 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
   minSize = 100,
   onResizeEnd,
 }: SplitPanelProps) => {
-  const [constrainedSize, setConstrainedSize] = useState(defaultSize);
+  const [panelSize, setPanelSize] = useState(defaultSize);
   const [dragging, setDragging] = useState(false);
   const mouseupListenerIsSetRef = useRef(false);
   const dragStartPositionRef = useRef(0);
-  const previousConstrainedSizeRef = useRef(constrainedSize);
+  const previousPanelSizeRef = useRef(panelSize);
 
   const isHorizontal = useMemo(
     () => position === 'left' || position === 'right',
@@ -194,10 +194,10 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
       dragStartPositionRef.current = isHorizontal
         ? event.clientX
         : event.clientY;
-      previousConstrainedSizeRef.current = constrainedSize;
+      previousPanelSizeRef.current = panelSize;
       setDragging(true);
     },
-    [constrainedSize, isHorizontal]
+    [panelSize, isHorizontal]
   );
 
   const endDragging = useCallback((event: MouseEvent) => {
@@ -214,10 +214,10 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
       if (position === 'right' || position === 'bottom') {
         diff = -diff;
       }
-      setConstrainedSize(
+      setPanelSize(
         Math.min(
           maxSize,
-          Math.max(minSize, previousConstrainedSizeRef.current + diff)
+          Math.max(minSize, previousPanelSizeRef.current + diff)
         )
       );
     }, 1000 / 30),
@@ -250,7 +250,7 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
     if (onResizeEnd != null && !dragging) {
       onResizeEnd(constrainedSize);
     }
-  }, [onResizeEnd, constrainedSize, dragging]);
+  }, [onResizeEnd, panelSize, dragging]);
 
   divider = divider || (args => <DefaultDivider {...args} />);
 
@@ -265,7 +265,7 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
         isHorizontal={isHorizontal}
         panel
         position={position}
-        constrainedSize={constrainedSize}
+        panelSize={panelSize}
         visible={visible}
       >
         {panel}
@@ -273,7 +273,7 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
       <DividerGraple
         isHorizontal={isHorizontal}
         position={position}
-        constrainedSize={constrainedSize}
+        panelSize={panelSize}
         onMouseDown={startDragging}
         visible={visible}
       >
@@ -283,7 +283,7 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
         isHorizontal={isHorizontal}
         panel={false}
         position={position}
-        constrainedSize={constrainedSize}
+        panelSize={panelSize}
         visible={visible}
       >
         {children}
