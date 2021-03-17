@@ -7,6 +7,10 @@
     "dist",
     "src"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zjj1997/rc-split-panel.git"
+  },
   "engines": {
     "node": ">=10"
   },
@@ -37,7 +41,12 @@
   },
   "name": "rc-split-panel",
   "author": "zjj1997",
-  "keywords": ["React", "TypeScript", "React Component", "React Hooks"],
+  "keywords": [
+    "React",
+    "TypeScript",
+    "React Component",
+    "React Hook"
+  ],
   "module": "dist/rc-split-panel.esm.js",
   "size-limit": [
     {
