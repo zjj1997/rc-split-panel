@@ -57,7 +57,7 @@ export interface SplitPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * resizeEnd event
    */
-  onResizeEnd?: (constrainedSize: number) => void;
+  onResizeEnd?: (e: { panelSize: number }) => void;
 }
 
 const Container = styled.div<{ dragging: boolean; isHorizontal: boolean }>`
@@ -248,7 +248,7 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
 
   useEffect(() => {
     if (onResizeEnd != null && !dragging) {
-      onResizeEnd(constrainedSize);
+      onResizeEnd({ panelSize });
     }
   }, [onResizeEnd, panelSize, dragging]);
 
