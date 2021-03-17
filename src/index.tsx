@@ -159,9 +159,7 @@ const Pane = styled.div<DividerGrapleProps & { panel: boolean }>`
       ? `${props.isHorizontal ? 'width' : 'height'}: ${
           props.visible ? props.panelSize : 0
         }px;`
-      : `${props.position}: ${
-          props.visible ? props.panelSize + 1 : 0
-        }px;`}
+      : `${props.position}: ${props.visible ? props.panelSize + 1 : 0}px;`}
 `;
 
 export const SplitPanel: React.FC<SplitPanelProps> = ({
