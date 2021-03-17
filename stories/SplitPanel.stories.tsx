@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
-
-import { SplitPanel, SplitPanelProps } from '../src';
+import SplitPanel, { SplitPanelProps } from '../src';
 
 export default {
   title: 'SplitPanel',

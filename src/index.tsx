@@ -14,7 +14,7 @@ export interface SplitPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * panel
    */
-  panel: React.ReactNode;
+  panel?: React.ReactNode;
   /**
    * children
    */
@@ -162,7 +162,7 @@ const Pane = styled.div<DividerGrapleProps & { panel: boolean }>`
       : `${props.position}: ${props.visible ? props.panelSize + 1 : 0}px;`}
 `;
 
-export const SplitPanel: React.FC<SplitPanelProps> = ({
+const SplitPanel: React.FC<SplitPanelProps> = ({
   panel,
   children,
   divider,
@@ -289,3 +289,5 @@ export const SplitPanel: React.FC<SplitPanelProps> = ({
     </Container>
   );
 };
+
+export default SplitPanel;
